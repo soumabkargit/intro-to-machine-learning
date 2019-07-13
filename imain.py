@@ -1,5 +1,7 @@
 import pandas as pd
+from sklearn.metrics import mean_absolute_error
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
 
 # Path of the file to read
 iowa_file_path = 'input/train.csv'
@@ -37,3 +39,10 @@ iowa_model.fit(X,y)
 
 predictions = iowa_model.predict(X)
 print(predictions)
+
+# fll in and uncomment
+train_X, val_X, train_y, val_y = train_test_split(X, y, random_state = 1)
+iowa_model.fit(train_X, train_y)
+val_predictions = iowa_model.predict(val_X)
+val_mae = mean_absolute_error(val_y, val_predictions)
+print(val_mae)
