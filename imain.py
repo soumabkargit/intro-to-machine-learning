@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
 
 # Path of the file to read
 iowa_file_path = 'input/train.csv'
@@ -45,4 +46,12 @@ train_X, val_X, train_y, val_y = train_test_split(X, y, random_state = 1)
 iowa_model.fit(train_X, train_y)
 val_predictions = iowa_model.predict(val_X)
 val_mae = mean_absolute_error(val_y, val_predictions)
-print(val_mae)
+print("Validation MAE when not specifying max_leaf_nodes: {:,.0f}".format(val_mae))
+
+# Define the model. Set random_state to 1
+rf_model = RandomForestRegressor(random_state=1)
+# fit your model
+rf_model.fit(X, y)
+# Calculate the mean absolute error of your Random Forest model on the validation data
+rf_val_mae = rf_model.predict(X)
+print(rf_val_mae)
